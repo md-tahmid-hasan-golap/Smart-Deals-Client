@@ -13,16 +13,36 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li className="font-bold">
-        <NavLink to="/allProducts">All Products</NavLink>
+        <NavLink
+          className={({ isActive }) => (isActive ? "text-purple-600" : "")}
+          to="/allProducts"
+        >
+          All Products
+        </NavLink>
       </li>
       <li className="font-bold">
-        <NavLink to="/myProducts">My Products</NavLink>
+        <NavLink
+          className={({ isActive }) => (isActive ? "text-purple-600" : "")}
+          to="/myProducts"
+        >
+          My Products
+        </NavLink>
       </li>
       <li className="font-bold">
-        <NavLink to="/mybits">My Bids</NavLink>
+        <NavLink
+          className={({ isActive }) => (isActive ? "text-purple-600" : "")}
+          to="/mybits"
+        >
+          My Bids
+        </NavLink>
       </li>
       <li className="font-bold">
-        <NavLink to="/creatProducts">Create Product</NavLink>
+        <NavLink
+          className={({ isActive }) => (isActive ? "text-purple-600" : "")}
+          to="/creatProducts"
+        >
+          Create Product
+        </NavLink>
       </li>
     </>
   );
