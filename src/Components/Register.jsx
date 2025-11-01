@@ -17,7 +17,22 @@ const Register = () => {
     const password = form.password.value;
 
     creatUser(email, password)
-      .then(() => {
+      .then((result) => {
+        const newUser = {
+          name: result.user.displayName,
+          email: result.user.email,
+          image: result.user.photoURL,
+        };
+        // fetc
+        fetch("http://localhost:5000/user", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(newUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
         Swal.fire({
           title: "Registered Successfully!",
           icon: "success",
