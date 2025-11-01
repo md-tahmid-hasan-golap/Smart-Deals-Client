@@ -7,107 +7,121 @@ import { FcGoogle } from "react-icons/fc";
 const Register = () => {
   const { creatUser, signInWithGoogle } = useContext(AuthconText);
   const navigate = useNavigate();
+
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
-    const number = form.number.value;
+    const image = form.image.value;
     const password = form.password.value;
+
     creatUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        console.log(user);
+      .then(() => {
         Swal.fire({
-          title: "Register Successfully!",
+          title: "Registered Successfully!",
           icon: "success",
-          draggable: true,
           timer: 1500,
+          showConfirmButton: false,
         });
         navigate("/");
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
 
-    console.log(name, email, number, password);
+    console.log(name, email, image, password);
   };
+
   const handelSignInWithGoogle = () => {
     signInWithGoogle()
-      .then((result) => {
-        console.log(result);
+      .then(() => {
         Swal.fire({
-          title: "Sign In Google Successfully!",
+          title: "Signed in with Google!",
           icon: "success",
-          draggable: true,
           timer: 1500,
+          showConfirmButton: false,
         });
         navigate("/");
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
   return (
-    <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl my-7 rounded-lg mx-auto">
-      <div className="card-body">
-        <h1 className="text-3xl font-bold text-center">Register now!</h1>
-        <form onSubmit={handleRegister} className="fieldset">
-          {/* Name */}
-          <label className="label">Name</label>
-          <input
-            type="text"
-            name="name"
-            className="input"
-            placeholder="Name"
-            required
-          />
+    <div className="flex justify-center items-center min-h-screen bg-gray-50 my-7">
+      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-sm">
+        <h1 className="text-3xl font-bold text-center mb-2">Register Now!</h1>
+        <p className="text-center text-gray-500 mb-6">
+          Already have an account?{" "}
+          <Link to="/login" className="text-purple-600 font-semibold">
+            Login Now
+          </Link>
+        </p>
 
-          {/* Email */}
-          <label className="label">Email</label>
-          <input
-            type="email"
-            name="email"
-            className="input"
-            placeholder="Email"
-            required
-          />
+        <form onSubmit={handleRegister} className="space-y-4">
+          <div>
+            <label className="block mb-1 font-medium">Name</label>
+            <input
+              type="text"
+              name="name"
+              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Your name"
+              required
+            />
+          </div>
 
-          {/* Number */}
-          <label className="label">Number</label>
-          <input
-            type="number"
-            name="number"
-            className="input"
-            placeholder="Number"
-            required
-          />
+          <div>
+            <label className="block mb-1 font-medium">Email</label>
+            <input
+              type="email"
+              name="email"
+              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Email address"
+              required
+            />
+          </div>
 
-          {/* Password */}
-          <label className="label">Password</label>
-          <input
-            type="password"
-            name="password"
-            className="input"
-            placeholder="Password"
-            required
-          />
+          <div>
+            <label className="block mb-1 font-medium">Image URL</label>
+            <input
+              type="text"
+              name="image"
+              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Profile photo link"
+            />
+          </div>
 
-          <button className="btn btn-neutral mt-4">Register</button>
+          <div>
+            <label className="block mb-1 font-medium">Password</label>
+            <input
+              type="password"
+              name="password"
+              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Password"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-purple-500 to-purple-700 text-white py-2 rounded-lg font-semibold hover:opacity-90 transition"
+          >
+            Register
+          </button>
         </form>
-        <button onClick={handelSignInWithGoogle} className="btn btn-outline">
-          <FcGoogle size={25} />
-          Sign In With Google
+
+        <div className="flex items-center my-5">
+          <hr className="flex-grow border-gray-300" />
+          <span className="mx-3 text-gray-500">OR</span>
+          <hr className="flex-grow border-gray-300" />
+        </div>
+
+        <button
+          onClick={handelSignInWithGoogle}
+          className="w-full border border-gray-300 flex items-center justify-center gap-2 py-2 rounded-lg hover:bg-gray-50"
+        >
+          <FcGoogle size={24} />
+          <span>Sign Up With Google</span>
         </button>
       </div>
-
-      <p className="text-center mb-5">
-        Already Have An Account{" "}
-        <Link to="/login" className="text-blue-600 underline">
-          Login
-        </Link>
-      </p>
     </div>
   );
 };
