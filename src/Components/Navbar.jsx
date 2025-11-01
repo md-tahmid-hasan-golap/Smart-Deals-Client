@@ -1,7 +1,27 @@
-import React from "react";
-import { Link, NavLink } from "react-router";
+import React, { useContext } from "react";
+import { Link, NavLink, useNavigate } from "react-router";
+import { AuthconText } from "../firebase/FirebaseAuthProvider";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthconText);
+  const navigate = useNavigate();
+  const handelLogout = () => {
+    logOut()
+      .then((result) => {
+        console.log(result);
+        Swal.fire({
+          title: "Logout Successfully!",
+          icon: "success",
+          draggable: true,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const links = (
     <>
       <li className="font-bold">
@@ -82,19 +102,40 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end gap-3 mr-5">
-        <Link
-          to="/login"
-          className="px-6 py-2 border border-purple-500 text-purple-600 font-medium rounded-md hover:bg-purple-50 transition"
-        >
-          Login
-        </Link>
+        {user ? (
+          <div className="navbar-end gap-3 mr-5">
+            <img
+              className="w-12 h-12 border-2 border-green-600 rounded-full"
+              src={user?.photoURL}
+              alt=""
+              title={user.displayName}
+            />
 
-        <Link
-          to="/register"
-          className="px-6 py-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-medium rounded-md hover:opacity-90 transition"
-        >
-          Register
-        </Link>
+            <h2 className="text-2xl font-bold">{user.displayName}</h2>
+            <button
+              onClick={handelLogout}
+              className="btn bg-red-600 text-white"
+            >
+              LogOut
+            </button>
+          </div>
+        ) : (
+          <div className="navbar-end gap-3 mr-5">
+            {" "}
+            <Link
+              to="/login"
+              className="px-6 py-2 border border-purple-500 text-purple-600 font-medium rounded-md hover:bg-purple-50 transition"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="px-6 py-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white font-medium rounded-md hover:opacity-90 transition"
+            >
+              Register
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

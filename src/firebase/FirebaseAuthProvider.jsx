@@ -13,7 +13,7 @@ import {
 export const AuthconText = createContext(null);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-const FirebaseAuthProvider = () => {
+const FirebaseAuthProvider = ({ children }) => {
   // set user
   const [user, setUser] = useState(null);
   // set loading
@@ -66,7 +66,9 @@ const FirebaseAuthProvider = () => {
     logOut,
   };
 
-  return <AuthconText.Provider value={userData}></AuthconText.Provider>;
+  return (
+    <AuthconText.Provider value={userData}>{children}</AuthconText.Provider>
+  );
 };
 
 export default FirebaseAuthProvider;
