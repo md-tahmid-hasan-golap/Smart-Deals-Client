@@ -7,6 +7,7 @@ import MyBits from "../Components/MyBits";
 import CreatProducts from "../Components/CreatProducts";
 import Login from "../Components/Login";
 import Register from "../Components/Register";
+import ProductsDetails from "../Components/ProductsDetails";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,14 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        loader: () => fetch("http://localhost:5000/someProducts"),
         Component: Home,
+      },
+      {
+        path: "productsDetails/:id",
+        Component: ProductsDetails,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/singelProduct/${params.id}`),
       },
       {
         path: "/allProducts",
